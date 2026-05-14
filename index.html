@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatika Kelas 10 | Bab 5-9</title>
+    <style>
+        /* Reset & Base Styling */
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; 
+            background-color: #f4f4f4;
+        }
+
+        /* Navigasi Atas */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            z-index: 1000;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover { color: #3498db; }
+
+        /* Container Utama Slider */
+        .main-container {
+            display: flex;
+            width: 500vw; 
+            height: 100vh;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Setiap Section (Bab) */
+        section.page {
+            width: 100vw;
+            height: 100vh;
+            padding: 80px 20px 100px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Kotak Konten */
+        .content-box {
+            background: white;
+            padding: 25px; /* Padding ditambah agar lebih lega */
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 50px;
+            /* Memastikan teks tidak keluar */
+                word-wrap: break-word;
+            overflow-wrap: break-word;
+            text-align: justify; 
+            text-justify: auto;
+            word-break: normal;
+            webkit-hyphens: fixed;
+            hyphens: auto;
+            line-height: 1.3;
+        }
+        
+            
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: block;
+        }
+
+        /* Pengaturan Tabel */
+        .table-container {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory;
+            
+        }
+       
+          table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 570px; /* Memberi lebar minimal agar bisa dites gesernya */
+    table-layout: auto;
+  }
+
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    background: white; /* Penting: agar kolom tidak transparan saat ditimpa */
+    word-wrap: break-word;
+    white-space: normal;
+    vertical-align: top;
+    scroll-snap-align: start;
+  }
+
+  /* --- KODE UTAMA UNTUK MENGUNCI KOLOM PERTAMA --- */
+  .freeze-col {
+    position: sticky;
+    left: 0;           /* Tetap di sisi kiri */
+ z-index: 2;        /* Agar berada di atas kolom lain saat digeser */
+ background: #f1f1f1; /* Warna beda agar terlihat kontras */
+    font-weight: bold;
+  }
+
+        /* Warna Background Bab */
+        #bab5 { background-color: cyan; }
+        #bab6 { background-color: gray; }
+        #bab7 { background-color:  #FFB343; }
+        #bab8 { background-color: #d5e8d9; }
+        #bab9 { background-color: pink; }
+
+        /* Tombol Navigasi */
+        .slide-btn {
+            position: fixed;
+            bottom: 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+        .slide-btn:hover { background: #2980b9; }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+        
+        h1, h2 { color: #2c3e50; margin-top: 20px; }
+        p { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="javascript:void(0)" onclick="goToPage(0)">Bab 5</a>
+    <a href="javascript:void(0)" onclick="goToPage(1)">Bab 6</a>
+    <a href="javascript:void(0)" onclick="goToPage(2)">Bab 7</a>
+    <a href="javascript:void(0)" onclick="goToPage(3)">Bab 8</a>
+    <a href="javascript:void(0)" onclick="goToPage(4)">Bab 9</a>
+</nav>
+
+<button class="slide-btn prev-btn" onclick="changePage(-1)">&#10094; Kiri</button>
+<button class="slide-btn next-btn" onclick="changePage(1)">Kanan &#10095;</button>
+
+<div class="main-container" id="slider">
+    <section id="bab5" class="page">
+        <div class="content-box">
+              <h1>Bab 5:</h1>
+            <img src="https://marketplace.canva.com/EAGx_OGg63g/1/0/1600w/canva-jaringan-komputer-dan-internet-presentasi-nJ3qBQkAC0Q.jpg" alt="foto judul bab5" width="100%" height="100%">
+         <p>Jaringan komputer adalah sistem yang menghubungkan dua atau lebih perangkat untuk berbagi sumber daya, sementara internet adalah jaringan global raksasa yang menghubungkan jutaan jaringan komputer di seluruh dunia menggunakan protokol TCP/IP. Keduanya memungkinkan pertukaran data yang cepat untuk komunikasi, berbagi file, dan akses informasi.</p>
+         <strong><h1>Jenis-Jenis Jaringan Komputer Berdasarkan Jangkauan:</h1></strong>
+            <ul>
+             <li>PAN (Personal Area Network): Jaringan jangkauan personal, contohnya Bluetooth.</li>
+             <li>LAN (Local Area Network): Jaringan terbatas (gedung/kantor), biasanya menggunakan kabel, kecepatan tinggi.</li>
+             <li>MAN (Metropolitan Area Network): Jaringan kota/wilayah (10-50 km).</li>
+             <li>WAN (Wide Area Network): Jaringan geografis luas (negara/benua).</li>
+             <li>WLAN (Wireless Local Area Network): LAN tanpa kabel/Wi-Fi.</li> </ul>
+                <h1>Komponen dan Konektivitas:</h1>
+                <ul>
+                 <li>Jaringan Kabel: Menggunakan media fisik seperti kabel UTP atau fiber optik untuk kecepatan stabil.</li>
+             <li>Jaringan Nirkabel (Wireless): Menggunakan gelombang radio/Wi-Fi untuk fleksibilitas tinggi.</li>
+             <li>Perangkat: Melibatkan router, switch, dan modem untuk mengarahkan lalu lintas data.</li>
+            </ul>
+            <h1>
+                Manfaat Utama:
+            </h1>
+            <ul>
+                
+             <li>Komunikasi: Email, VoIP, dan media sosial.Berbagi Sumber Daya  </li>
+              <li>: Penggunaan printer atau file bersama dalam satu jaringan.
+             <li>Akses Informasi: Internet memungkinkan akses ke World Wide Web (WWW).  </li>
+            </ul>
+           
+           </ul>
+         <h1>di dalam jaringan ada yang namanya topologi. Topologi jaringan adalah pola koneksi antarperangkat komputer, dengan jenis utama meliputi Star, Mesh, Ring, Bus, Tree, dan Hybrid. </h1>
+           <ul> 
+          <li>  <h2>Topologi Star (Bintang): </h2>
+         <p>Semua komputer terhubung ke satu perangkat pusat (hub/switch). Kelebihannya mudah dikelola dan jika satu kabel rusak, yang lain tidak terganggu.</p></li>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZo4t7-tgeD5WG-6AQJiRbXxpUmYOggswadtlSXvXq-GIr46erScXQUsA&s" alt="Topologi Star" width="100%" height="100%">            
+            <li>  <h2>Topologi Mesh (Jala): </h2>
+         <p>Setiap perangkat terhubung langsung ke perangkat lainnya, menciptakan jalur ganda. Sangat andal (jika satu jalur putus, ada jalur lain), namun instalasi mahal dan kompleks.</p>
+            </li>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuk0A6Ymbfmgmr3jqobLUL8gQcNziYIFKbrMvRkmRomoGIWbPBsI3ubFU&s" alt="Topologi Mesh" width="100%" height="100%">
+        
+           <li>  <h2>Topologi Ring (Cincin): </h2>
+         <p>Komputer terhubung dalam rangkaian melingkar seperti cincin. Data mengalir satu arah, namun jika satu node rusak, seluruh jaringan dapat terganggu.</p>
+           </li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYL8IbKTXTxweocEi6YsTBM8QN3XCAgTf_M_z0Xm0psA&s" alt="Topologi Ring" width="100%" height="100%">
+           <li>  <h2>Topologi Bus: </h2>
+         <p>Semua perangkat terhubung ke satu kabel utama (backbone) menggunakan konektor. Sangat sederhana dan murah, tetapi jika kabel pusat rusak, seluruh jaringan mati.</p>
+         </li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVc8zxxJ2DIy7MVweEVTlII-DfkHaghCvd5Lav-mtIGQ&s" alt="Topologi bus" width="100%" height="100%">
+            
+           <li> <h2>Topologi Tree (Pohon): </h2>
+        <p>Kombinasi dari beberapa topologi star yang dihubungkan dengan topologi bus (struktur hierarkis). Cocok untuk jaringan besar dengan manajemen bertingkat. </p>
+            </li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-_f4jmprwFuqXxhjQ0HkVoqnM5vv2Hx170-AZB2_NTdTdG7IRMlLFSMs&s" alt="Topologi Tree" width="100%" height="100%">
+           
+        <li>  <h2>Topologi Hybrid:  </h2>
+           <p>Gabungan dari dua atau lebih jenis topologi yang berbeda. Sangat fleksibel, tetapi desain dan pengelolaannya rumit.</p>
+            </li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReNTGTfDy9FgrF0_K12axPd1K3POVASbafTgR-zVHbnHMN1hYtGiREb18&s" alt="Topologi Hybrid" width="100%" height="100%">
+         
+          <li>  <h2>Topologi Peer-to-Peer:  </h2>
+           <p>Jaringan paling sederhana yang menghubungkan dua komputer secara langsung.</p>
+         </li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPHQx5yyj9lUeBUv2esu-BrpKP5CQ50CwHB24i3ghXlg&s" alt="Topologi Peer-to-Peer" width="100%" height="100%">
+         
+         <li>  <h2>Topologi Linier (Bus Beruntut):  </h2>
+           <p>Pengembangan topologi bus di mana setiap komputer terhubung ke komputer sebelumnya dan sesudahnya dalam satu baris.</p>
+         </li><img src="https://blog.dewaweb.com/wp-content/uploads/2023/02/topologi-linear-bus.jpg" alt="topologi-linear-bus" width="100%" height="100%">
+           </ul>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="freeze-col">Topologi</th>
+                            <th >Kelebihan</th>
+                          <th >Kekurangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="freeze-col"><b>Bus</b></td>
+                          <td >penambah client atau work-station baru mudah digunakan.
+ mudah digunakan dan sangat sederhana.
+ biaya instalasi murah karena memakai sedikit kabel.</td>
+                            <td >sering terjadi tabrakan arus data.
+ proses pengiriman dan penerimaan data kurang efisien.
+ sulit untuk dikembangkan
+ jika ada masalah kabel, semua komputer akan terganggu.</td>
+                        </tr>
+                        <tr>
+                            <td class="freeze-col"><b>Star</b></td>
+                          <td >jika ada masalah pada satu kabel, komputer lain tidak terganggu.
+tingkat keamanan cukup baik.
+user lebih mudah mendeteksi kesalahan.
+fleksibel.</td>
+                            <td >biaya instalasi mahal karena memakai banyak kabel.
+jika hub/switch rusak, maka semua jaringan akan terganggu.
+jaringan terganggu pada hub/switch.</td>
+                        </tr>
+                        <tr>
+                            <td class="freeze-col"><b>Ring</b></td>
+                          <td >biaya instalasi murah dan mudah.
+performa koneksi cukup baik.
+ implementasi mudah dilakukan.
+</td>
+                            <td >jika ada masalah troubleshooting rumit.
+rentan terjadi tabrakan data.
+jika ada masalah, semua komputer akan terganggu.</td>
+                        </tr>
+                        <tr>
+                           <td class="freeze-col"><b>Mesh</b></td>
+                           <td > bandwith data sangat besar.
+keamanan cukup baik.
+tidak terjadi tabrakan data karena jalur pengirimannya banyak.
+</td>
+                           <td >instalasi sangat rumit dan mahal, membutuhkan banyak kabel dan port.biaya instalasi mahal karena memakai banyak kabel.</td>
+                        </tr>
+                        <tr>
+                            <td class="freeze-col"><b>Tree</b></td>
+                           <td >Skalabilitas tinggi (mudah diperluas), manajemen jaringan terpusat dan terstruktur.mudah dikembangkan menjadi topologi yang luas.susunan topologi terpusat sehingga pengaturannya mudah.</td>
+                           <td >Bergantung pada kabel backbone utama, manajemen cukup rumit.biaya instalasi mahal karena memakai banyak kabel.
+sangat bergantung pada backbone yang merupakan pusat jaringan.
+kinerja jaringan lambat.</td>
+                        </tr>
+                        <tr>
+                        <td class="freeze-col"><b>Linear</b></td>
+                            <td >Hemat kabel, instalasi sederhana, mudah dikembangkan.</td>
+                            <td >Trafik data padat, keamanan rentan, jika satu kabel rusak, jaringan terputus.</td></section>
+                        </tr>
+                        <tr>
+                            <td class="freeze-col"><b>Peer-to-Peer</b></td>
+                         <td >Biaya sangat murah, instalasi sangat mudah.</td>
+                           <td >Keamanan rendah, tidak cocok untuk skala besar.</td>
+                        </tr>
+                        <tr>
+                       <td class="freeze-col"><b>Hybrid</b></td>
+                            <td >Fleksibel, bisa menggabungkan berbagai jenis topologi, mudah diperluas.</td>
+                            <td >Instalasi dan konfigurasi sangat rumit, biaya perawatan mahal.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </section>
+
+    <section id="bab6" class="page">
+        <div class="content-box">
+            <h1>Bab 6: Analisis Data</h1>
+            <p>Analisis data adalah proses pengolahan data mentah untuk menemukan pola, tren, dan informasi penting guna mendukung pengambilan keputusan yang tepat.</p>
+
+            <h2>1. Siklus Analisis Data</h2>
+            <p>Untuk mendapatkan hasil yang akurat, data harus melewati beberapa tahap penting:</p>
+            <ol>
+                <li><strong>Pengumpulan Data:</strong> Mencari data dari kuesioner, sensor, atau data publik.</li>
+                <li><strong>Pembersihan Data (Cleaning):</strong> Memperbaiki format yang salah dan menghapus data ganda agar hasil tidak bias.</li>
+                <li><strong>Analisis:</strong> Mengolah data menggunakan fungsi statistik seperti Mean (rata-rata), Median (nilai tengah), dan Modus.</li>
+                <li><strong>Visualisasi:</strong> Menyajikan data dalam bentuk grafik atau diagram agar mudah dipahami oleh orang lain.</li>
+            </ol>
+
+            <h2>2. Teknik Pemrosesan Data</h2>
+            <ul>
+                <li><strong>Transformasi Data:</strong> Mengubah format data agar seragam.</li>
+                <li><strong>Generalisasi Data:</strong> Mengelompokkan data detail menjadi kategori yang lebih besar.</li>
+                <li><strong>Analisis Prediktif:</strong> Menggunakan data masa lalu untuk memperkirakan kejadian di masa depan.</li>
+            </ul>
+            
+            <h2>3. Perangkat Pendukung</h2>
+            <p>Beberapa alat yang umum digunakan dalam analisis data meliputi:</p>
+            <ul>
+                <li>Aplikasi Spreadsheet (MS Excel / Google Sheets)</li>
+                <li>Bahasa Pemrograman (Python dengan Library Pandas)</li>
+                <li>Lingkungan Pemrograman (Google Colab / Jupyter Notebook)</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="bab7" class="page">
+        <div class="content-box">
+            <h1>Bab 7</h1>
+            <img src="https://i.ytimg.com/vi/sVHVznsgQTE/sddefault.jpg" width="100%" height="100%"
+            <p>Bab ini fokus pada pengembangan logika berpikir komputasional melalui bahasa pemrograman.tapi sebelum ke materi ada sejarah yang harus di ketahui,berikut sejarah singkatnya:
+            Sejarah Perkembangan Komputer
+Dimulai bahkan jauh sebelum Masehi, yaitu ± 2400 BC dengan abacus, sebelum mesin elektronik pertama diciptakan. Komputer kemudian dapat diprogram, yang dirancang oleh Charles Babbage, dengan pemrogram pertamanya ialah seorang wanita bernama Ada Lovelace. lanjut ke materi</p>
+            <h2>Materi Pokok:</h2>
+            <ul>
+                <strong>1. Algoritma: Otak di Balik Program</strong>
+                <p>Algoritma adalah urutan langkah logis untuk menyelesaikan masalah.</p>
+                <li><strong>Syarat Utama: Harus logis, efisien, dan memiliki titik henti (tidak berputar selamanya).</strong></li>
+                <li>Cara Penulisan:Flowchart: Menggunakan simbol (kotak, belah ketupat) untuk alur visual.Pseudocode: Tulisan mirip kode program tapi menggunakan bahasa manusia yang terstruktur.
+                </li>
+                
+                <strong>2. Struktur Dasar Kode (Konstruksi Dasar)</strong>
+                <p>Dalam bahasa pemrograman (seperti Python atau C), ada tiga struktur utama:</p>
+                
+                <li><strong>Sekuensial (Berurutan):</strong> Komputer menjalankan kode baris demi baris dari atas ke bawah.</li>
+                <li><strong>Percabangan (Kondisional):</strong> Program membuat keputusan.Contoh: IF nilai > 75 THEN Lulus, ELSE Remedial.</li>
+                <li><strong>Perulangan (Looping): :</strong> Menjalankan perintah yang sama berkali-kali sampai tujuan tercapai.Contoh: Menampilkan angka 1 sampai 100 secara otomatis.</li>
+                <strong>3. Komponen Teknis</strong>
+                <li>
+                    <strong>Variabel:</strong> Wadah untuk menyimpan data (seperti kotak yang diberi nama).
+                </li>
+                <li>
+                    <strong>Tipe Data:</strong> Jenis isi "kotak" tersebut. Bisa berupa angka bulat (Integer), angka desimal (Float), kata/kalimat (String), atau Benar/Salah (Boolean).
+                </li>
+                <li>
+                   <strong>Operator:</strong> Alat untuk memproses data, seperti tambah (+), kurang (-), atau pembanding (==, >, <).
+                </li>
+                <strong>4. Proses Problem Solving</strong> 
+                <p>Di bab ini, kamu tidak hanya menghafal kode, tapi belajar:</p>
+                <li>
+                    <strong>Analisis:</strong> Membedah masalah menjadi bagian kecil.
+                </li>
+                <li>
+                    <strong>Coding:</strong> Menuliskan solusi ke bahasa komputer.
+                </li>
+                <li>
+                    <strong>Testing/Tracing:</strong> Mengecek apakah program sudah jalan dengan benar atau masih ada bug (kesalahan).
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="bab8" class="page">
+        <div class="content-box">
+            <h1>Bab 8</h1>
+            <img src="https://cdn.slidesharecdn.com/ss_thumbnails/kelasxbab3-dampaksosialinformatikaok-260106004129-3befff6b-thumbnail.jpg?width=640&height=640&fit=bounds" width="100%" height="100%">
+            <p>Menganalisis bagaimana teknologi mengubah cara kita hidup dan berinteraksi.</p>
+            <h2>Topik Utama:</h2>
+            <ul>
+                <p><strong><h1>1. Keamanan Data:</h1></strong> Fokus utamanya adalah melindungi data sensitif agar tidak disalahgunakan oleh pihak yang tidak bertanggung jawab.
+                <li>Privasi vs Keamanan:</li> Privasi adalah hak kita untuk mengontrol informasi pribadi, sedangkan keamanan adalah cara/teknologi untuk melindunginya (misalnya: enkripsi, two-factor authentication).
+                <li>Ancaman:</li> Waspadai phishing (penipuan untuk mencuri password), malware, dan kebocoran data di platform digital.
+                <li>Pentingnya Data Pribadi:</li> Data seperti NIK, alamat, dan nomor telepon bisa digunakan untuk penipuan pinjaman online atau identitas palsu.</p>
+                <h1><strong>2. Etika Digital (Netiket):</strong></h1>
+                <p>Aturan tidak tertulis namun penting dalam berkomunikasi di ruang digital agar tetap sopan dan menghargai orang lain.
+                <li>Berpikir sebelum Posting:</li>
+                Gunakan prinsip THINK (Is it True, Helpful, Inspiring, Necessary, Kind?).
+                <li>Menghargai Hak Cipta:</li>
+                Tidak melakukan plagiarisme atau menyebarkan konten milik orang lain tanpa izin/sumber yang jelas.
+                <li>Verifikasi Informasi:</li>
+                Selalu cek fakta sebelum menyebarkan berita untuk menghindari penyebaran hoaks.</p>
+                <p><h1><strong>3. Cyberbullying</strong></h1>
+                Tindakan perundungan yang dilakukan melalui perangkat digital (media sosial, aplikasi chat, atau game online).
+                <li>Bentuknya:</li>Bisa berupa komentar kasar, penyebaran rumor palsu, pengucilan di grup, hingga pengunggahan foto memalukan tanpa izin.
+                <li>Dampak:</li>Sangat serius bagi kesehatan mental korban, mulai dari depresi hingga isolasi sosial.
+                <li>Pencegahan:</li>Jangan membalas pelaku, simpan bukti screenshot, blokir akun pelaku, dan laporkan ke orang dewasa atau pihak platform.</p>
+              <p>  <h1><strong>4. Ekonomi Digital:</strong></h1>Pergeseran aktivitas ekonomi dari cara konvensional (tatap muka) ke berbasis teknologi informasi.
+              <li>E-commerce:</li>
+              Platform jual beli online (seperti Shopee atau Tokopedia) yang memudahkan akses barang dari mana saja.
+              <li>Fintech:</li>
+              Layanan keuangan digital seperti dompet digital (e-wallet), mobile banking, hingga investasi online yang lebih praktis.
+              <li>Dampak Kerja:</li>
+              Munculnya profesi baru seperti Social Media Specialist, Content Creator, dan pengembang aplikasi, namun juga menggantikan beberapa pekerjaan manual dengan otomatisasi.</p>
+            </ul>
+        </div>
+    </section>
+
+    <section id="bab9" class="page">
+        <div class="content-box">
+            <h1>Bab 9</h1>
+            <img src="https://i.ytimg.com/vi/GEkaNjqOO2k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDUQwqL9QJhX7z5o4TWCf-MsTHqUg" width="100%" height="100%">
+            <p>Proyek kolaborasi untuk menyelesaikan masalah nyata menggunakan informatika.</p>
+            <h2>Rencana Proyek:</h2>
+            <ul>
+               <p> <h1><strong>1. Identifikasi Masalah:</strong></h1> Ini adalah tahap pengamatan. Kamu harus menemukan masalah yang bisa diselesaikan dengan bantuan teknologi.
+               <li>Contoh: Antrean kantin yang terlalu panjang, kesulitan mencatat kehadiran siswa secara cepat, atau kurangnya informasi jadwal ekstrakurikuler.</li>
+               
+                <h1><strong>2. Perancangan Solusi:</strong></h1> Di sini kamu merancang "bagaimana" cara menyelesaikannya tanpa coding dulu.
+                <li>Aktivitas: Membuat alur kerja (flowchart), merancang tampilan layar (UI/UX), dan menentukan data apa saja yang dibutuhkan.</li>
+                <h1><strong>3. Implementasi:</strong></h1> Tahap di mana ide kamu mulai diwujudkan menjadi produk nyata.
+                <li>Coding: Menggunakan bahasa pemrograman yang sudah dipelajari (biasanya Python atau aplikasi berbasis blok).</li>
+                <li>Prototipe: Membuat versi awal produk yang sudah bisa dijalankan meskipun fiturnya belum lengkap.</li>
+                <h1><strong>4. Presentasi:</strong></h1> Menjual ide dan hasil karyamu kepada orang lain.
+                <li>Fokus: Menjelaskan apa masalahnya, mengapa solusimu efektif, dan bagaimana cara kerja aplikasi/sistem yang kamu buat.</li></p>
+                <h1><strong>Kenapa Disebut "Lintas Bidang"?</strong></h1>
+                <p>Karena kamu menggabungkan Informatika dengan bidang lain. Misalnya:</p>
+                <li>Informatika + Ekonomi: Aplikasi pencatat keuangan jajan.</li>
+                <li>Informatika + Lingkungan: Sistem monitoring kebersihan taman sekolah.</li>
+                <li>Informatika + Kesehatan: Pengingat waktu minum air atau jadwal olahraga.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+<script>
+    let currentPage = 0;
+    const totalPages = 5;
+    const slider = document.getElementById('slider');
+
+    function goToPage(index) {
+        currentPage = index;
+        updateSlider();
+    }
+
+    function changePage(direction) {
+        currentPage += direction;
+        if (currentPage < 0) currentPage = 0;
+        if (currentPage >= totalPages) currentPage = totalPages - 1;
+        updateSlider();
+    }
+
+    function updateSlider() {
+        slider.style.transform = `translateX(-${currentPage * 100}vw)`;
+        // Scroll ke atas setiap kali ganti halaman
+        const sections = document.querySelectorAll('.page');
+        sections[currentPage].scrollTop = 0;
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "ArrowRight") changePage(1);
+        if (e.key === "ArrowLeft") changePage(-1);
+    });
+</script>
+
+</body>
+</html>
